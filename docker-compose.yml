@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: scholarship_db
+    restart: always
+    image: mysql
+    ports:
+      - '20000:3306'
+    volumes:
+      - scholarship_db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: scholarship
+      MYSQL_ROOT_PASSWORD: password
+      DEFAULT_CHARACTER_SET: utf8mb4
+      CHARACTER_SET_SERVER: utf8mb4
+      COLLATION_SERVER: utf8mb4_general_ci
+      TZ: Asia/Seoul
+
+  nginx:
+    container_name: scholarship_nginx
+    restart: always
+    image: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+  scholarship_db:

@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: morlatjanghak
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://scholarship_db:3306/scholarship?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: scholarship
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
