@@ -58,6 +58,6 @@ jobs:
             done
 
             echo "Start Spring..."
-            sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul morlatjanghak-0.0.1-SNAPSHOT.jar > app.out 2> app.err < /dev/null &
+            sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul /home/ubuntu/app/morlatjanghak-0.0.1-SNAPSHOT.jar > app.out 2> app.err < /dev/null &
 
             echo "Finished!"
