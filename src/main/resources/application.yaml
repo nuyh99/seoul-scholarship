@@ -12,7 +12,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:20000/scholarship?useSSL=false&allowPublicKeyRetrieval=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:20000/scholarship?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: scholarship
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
