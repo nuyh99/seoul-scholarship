@@ -33,7 +33,7 @@
 </div>
 
 <script>
-  document.getElementById('textForm').addEventListener('submit', function(event) {
+  document.getElementById('textForm').addEventListener('submit', function (event) {
     event.preventDefault();
     const textValue = document.getElementById('text').value;
     fetch('/v1/ai', {
@@ -41,11 +41,11 @@
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ text: textValue })
+      body: JSON.stringify({text: textValue})
     })
     .then(response => response.text())
     .then(data => {
-      document.getElementById('response').innerHTML = marked.parse(data);
+      document.getElementById('response').innerText = data;
     })
     .catch(error => console.error('Error:', error));
   });

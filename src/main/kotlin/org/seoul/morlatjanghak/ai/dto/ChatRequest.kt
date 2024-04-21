@@ -1,10 +1,10 @@
 package org.seoul.morlatjanghak.ai.dto
 
-import org.seoul.morlatjanghak.ai.client.ChatRequest
-
 data class ChatRequest(
-    val text: String = ""
-){
-
-    fun toAIChatRequest(): ChatRequest = ChatRequest(inputs = text)
+    var model: String,
+    var messages: List<Message>
+) {
+    override fun toString(): String {
+        return "ChatRequest(model='$model', messages=$messages)"
+    }
 }
