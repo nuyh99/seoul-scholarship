@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: morlatjanghak
+
+  jpa:
+    hibernate:
+      ddl-auto: update
