@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: morlatjanghak
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
