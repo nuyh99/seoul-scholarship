@@ -15,6 +15,9 @@ data class MemberCreateRequest(
     val lastSemesterGrade: Double,
     val totalGrade: Double,
     val incomeRange: String,
+    val militaryService: String,
+    val siblingExists: Boolean,
+    val significant: List<String>
 ) {
     fun toEntity(): Member {
         return Member(
@@ -29,6 +32,9 @@ data class MemberCreateRequest(
             lastSemesterGrade = lastSemesterGrade,
             totalGrade = totalGrade,
             incomeRange = incomeRange,
+            militaryService = militaryService,
+            siblingExists = siblingExists,
+            significant = significant
         )
     }
 }

@@ -1,16 +1,16 @@
 create table member
 (
     id                  varchar(255) not null primary key,
-    birth               date         null,
-    enrolled            varchar(255) null,
-    income_range        varchar(255) null,
-    last_semester_grade double       null default 0,
-    major_category      varchar(255) null,
-    name                varchar(255) null,
-    school_name         varchar(255) null,
-    semester            varchar(255) null,
-    sex                 varchar(255) null,
-    total_grade         double       null default 0
+    birth               date         null comment '생년월일',
+    enrolled            varchar(255) null comment '재학여부',
+    income_range        varchar(255) null comment '소득분위',
+    last_semester_grade double       null default 0 comment '직전학기 성적',
+    major_category      varchar(255) null comment '전공구분',
+    name                varchar(255) null comment '이름',
+    school_name         varchar(255) null comment '학교명',
+    semester            varchar(255) null comment '현재 학기',
+    sex                 varchar(255) null comment '성별',
+    total_grade         double       null default 0 comment '학교 최대 학점',
 );
 
 create table scholarship
