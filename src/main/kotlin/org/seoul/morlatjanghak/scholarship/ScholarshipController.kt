@@ -1,5 +1,6 @@
 package org.seoul.morlatjanghak.scholarship
 
+import org.seoul.morlatjanghak.scholarship.dto.ScholarshipDetailResponse
 import org.seoul.morlatjanghak.scholarship.dto.ScholarshipResponse
 import org.seoul.morlatjanghak.scholarship.dto.SearchOption
 import org.springframework.data.domain.Page
@@ -28,7 +29,7 @@ class ScholarshipController(
     }
 
     @GetMapping("/api/scholarships/{scholarshipId}")
-    fun findById(@PathVariable("scholarshipId") scholarshipId: Long): ScholarshipResponse {
+    fun findById(@PathVariable("scholarshipId") scholarshipId: Long): ScholarshipDetailResponse {
         return scholarshipService.findById(scholarshipId)
     }
 }

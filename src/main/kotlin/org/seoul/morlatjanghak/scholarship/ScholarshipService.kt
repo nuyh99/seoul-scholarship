@@ -1,5 +1,6 @@
 package org.seoul.morlatjanghak.scholarship
 
+import org.seoul.morlatjanghak.scholarship.dto.ScholarshipDetailResponse
 import org.seoul.morlatjanghak.scholarship.dto.ScholarshipResponse
 import org.seoul.morlatjanghak.scholarship.dto.SearchOption
 import org.slf4j.LoggerFactory
@@ -44,10 +45,10 @@ class ScholarshipService(
     }
 
     @Transactional
-    fun findById(id: Long): ScholarshipResponse {
+    fun findById(id: Long): ScholarshipDetailResponse {
         val scholarship = scholarshipRepository.findById(id).orElseThrow()
         scholarship.increaseViewCount()
 
-        return ScholarshipResponse.from(scholarship)
+        return ScholarshipDetailResponse.from(scholarship)
     }
 }
