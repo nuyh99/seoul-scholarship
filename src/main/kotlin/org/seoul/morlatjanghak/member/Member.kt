@@ -1,5 +1,7 @@
 package org.seoul.morlatjanghak.member
 
+import jakarta.persistence.CollectionTable
+import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -23,6 +25,8 @@ class Member(
     val incomeRange: String,
     val militaryService: String,
     val siblingExists: Boolean,
+    @CollectionTable(name = "member_detailed_condition")
     @ElementCollection(fetch = FetchType.EAGER)
-    val significant: List<String>
+    @Column(name = "detailed_condition")
+    val detailedConditions: List<String>
 )

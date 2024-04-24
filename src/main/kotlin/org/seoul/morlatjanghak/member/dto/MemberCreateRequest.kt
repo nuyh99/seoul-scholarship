@@ -17,7 +17,7 @@ data class MemberCreateRequest(
     val incomeRange: String,
     val militaryService: String,
     val siblingExists: Boolean,
-    val significant: List<String>
+    val detailedConditions: List<String>
 ) {
     fun toEntity(): Member {
         return Member(
@@ -34,7 +34,7 @@ data class MemberCreateRequest(
             incomeRange = incomeRange,
             militaryService = militaryService,
             siblingExists = siblingExists,
-            significant = significant
+            detailedConditions = detailedConditions
         )
     }
 }

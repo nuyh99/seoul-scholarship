@@ -10,7 +10,7 @@ create table member
     school_name         varchar(255) null comment '학교명',
     semester            varchar(255) null comment '현재 학기',
     sex                 varchar(255) null comment '성별',
-    total_grade         double       null default 0 comment '학교 최대 학점',
+    total_grade         double       null default 0 comment '학교 최대 학점'
 );
 
 create table scholarship
