@@ -2,6 +2,8 @@ package org.seoul.morlatjanghak.recommendedscholarship
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Index
 import jakarta.persistence.Table
@@ -15,9 +17,12 @@ import jakarta.persistence.Table
 class RecommendedScholarship(
 
     @Id
-    val id: Long? = null,
-    @Column(columnDefinition = "varchar varchar(255) COMMENT '회원 ID'")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+
+    @Column(columnDefinition = "varchar(255) COMMENT '회원 ID'")
     val memberId: String,
+
     @Column(columnDefinition = "bigint COMMENT '장학금 ID'")
     val scholarshipId: Long,
 )
