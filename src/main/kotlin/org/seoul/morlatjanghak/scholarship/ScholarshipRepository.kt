@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
 interface ScholarshipRepository : JpaRepository<Scholarship, Long>, JpaSpecificationExecutor<Scholarship> {
 
-    fun findAllByIdIn(ids: List<Long>, pageable: Pageable): Page<Scholarship>
+    fun findAllByIdInOrderBy(ids: List<Long>, pageable: Pageable): Page<Scholarship>
 }

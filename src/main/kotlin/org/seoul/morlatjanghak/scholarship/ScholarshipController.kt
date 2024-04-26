@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ScholarshipController(
-    private val scholarshipService: ScholarshipService
+    private val scholarshipService: ScholarshipService,
 ) {
 
     @GetMapping("/api/scholarships")
@@ -30,6 +30,6 @@ class ScholarshipController(
 
     @GetMapping("/api/scholarships/{scholarshipId}")
     fun findById(@PathVariable("scholarshipId") scholarshipId: Long): ScholarshipDetailResponse {
-        return scholarshipService.findById(scholarshipId)
+        return scholarshipService.findByIdAndIncreaseViewCount(scholarshipId)
     }
 }

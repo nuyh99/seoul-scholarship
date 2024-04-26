@@ -1,5 +1,6 @@
 package org.seoul.morlatjanghak.scholarship
 
+import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipService
 import org.seoul.morlatjanghak.scholarship.dto.ScholarshipDetailResponse
 import org.seoul.morlatjanghak.scholarship.dto.ScholarshipResponse
 import org.seoul.morlatjanghak.scholarship.dto.SearchOption
@@ -9,16 +10,13 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.security.SecureRandom
 
 @Transactional(readOnly = true)
 @Service
 class ScholarshipService(
+    private val recommendedScholarshipService: RecommendedScholarshipService,
     private val scholarshipRepository: ScholarshipRepository
 ) {
-    private val log = LoggerFactory.getLogger(ScholarshipService::class.java)
-    private val random = SecureRandom()
-
     fun findAll(pageable: Pageable, searchOption: SearchOption): Page<ScholarshipResponse> {
         val sort = searchOption.getSort()
         val pageRequest = PageRequest.of(pageable.pageNumber, pageable.pageSize, sort)
@@ -31,24 +29,20 @@ class ScholarshipService(
     fun findRecommended(pageable: Pageable, searchOption: SearchOption, memberId: String): Page<ScholarshipResponse> {
         log.info("추천 검색 memberId: {}", memberId)
 
-        val sort = searchOption.getSort()
-        val pageRequest = PageRequest.of(pageable.pageNumber, pageable.pageSize, sort)
-
-        return scholarshipRepository.findAllByIdIn(getRandomIndices(), pageRequest)
+        val recommendedScholarshipIds = recommendedScholarshipService.findRecommendedScholarshipIds(memberId)
+        return scholarshipRepository.findAllByIdInOrderBy(recommendedScholarshipIds, pageable)
             .map(ScholarshipResponse.Companion::from)
     }
 
-    fun getRandomIndices(): List<Long> {
-        return generateSequence { random.nextLong(2000) }
-            .take(100)
-            .toList()
-    }
-
     @Transactional
-    fun findById(id: Long): ScholarshipDetailResponse {
+    fun findByIdAndIncreaseViewCount(id: Long): ScholarshipDetailResponse {
         val scholarship = scholarshipRepository.findById(id).orElseThrow()
         scholarship.increaseViewCount()
 
         return ScholarshipDetailResponse.from(scholarship)
+    }
+
+    companion object {
+        private val log = LoggerFactory.getLogger(ScholarshipService::class.java)
     }
 }
