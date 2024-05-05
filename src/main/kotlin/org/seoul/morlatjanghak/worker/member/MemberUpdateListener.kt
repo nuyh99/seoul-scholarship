@@ -9,10 +9,11 @@ import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipRepo
 import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipService
 import org.seoul.morlatjanghak.storedscholarship.StoredScholarshipRepository
 import org.slf4j.LoggerFactory
-import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.transaction.event.TransactionPhase
+import org.springframework.transaction.event.TransactionalEventListener
 
 @Component
 class MemberUpdateListener(
@@ -25,7 +26,8 @@ class MemberUpdateListener(
 ) {
 
     @Async
-    @EventListener(MemberDeleteEvent::class)
+    @Transactional
+    @TransactionalEventListener(MemberDeleteEvent::class, phase = TransactionPhase.AFTER_COMMIT)
     fun handle(event: MemberDeleteEvent) {
         recommendedScholarshipRepository.deleteAllByMemberId(event.memberId)
         appliedScholarshipRepository.deleteAllByMemberId(event.memberId)
@@ -35,7 +37,7 @@ class MemberUpdateListener(
 
     @Async
     @Transactional
-    @EventListener(MemberUpdateEvent::class)
+    @TransactionalEventListener(MemberUpdateEvent::class, phase = TransactionPhase.AFTER_COMMIT)
     fun handle(event: MemberUpdateEvent) {
         val member = memberRepository.findById(event.memberId).orElseThrow()
 
