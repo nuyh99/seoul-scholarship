@@ -30,7 +30,7 @@ data class ScholarshipResponse(
             applyingStatus: ApplyingStatus = ApplyingStatus.NOTHING,
             isStored: Boolean = false
         ): ScholarshipResponse {
-            return ScholarshipResponse(
+            val response = ScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
@@ -39,8 +39,14 @@ data class ScholarshipResponse(
                 endDate = scholarship.endDate,
                 viewCount = scholarship.viewCount,
                 applyingStatus = applyingStatus,
-                isStored = isStored
+                isStored = isStored,
             )
+
+            if (response.isStored && response.applyingStatus == ApplyingStatus.NOTHING) {
+                response.applyingStatus = ApplyingStatus.SAVED
+            }
+
+            return response
         }
     }
 }

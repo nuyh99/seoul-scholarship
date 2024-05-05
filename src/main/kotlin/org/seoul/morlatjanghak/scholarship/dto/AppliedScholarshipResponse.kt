@@ -14,9 +14,9 @@ data class AppliedScholarshipResponse(
     val startDate: LocalDate?,
     val endDate: LocalDate?,
     val viewCount: Long,
-    val applyingStatus: ApplyingStatus,
+    var applyingStatus: ApplyingStatus,
     val storedDate: LocalDateTime?,
-    val modifiedDate: LocalDateTime
+    val modifiedDate: LocalDateTime,
 ) {
     companion object {
         fun of(
@@ -24,7 +24,7 @@ data class AppliedScholarshipResponse(
             applied: AppliedScholarship,
             storedDate: LocalDateTime?
         ): AppliedScholarshipResponse {
-            return AppliedScholarshipResponse(
+            val response = AppliedScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
@@ -34,8 +34,14 @@ data class AppliedScholarshipResponse(
                 viewCount = scholarship.viewCount,
                 applyingStatus = applied.status,
                 storedDate = storedDate,
-                modifiedDate = applied.updatedAt!!
+                modifiedDate = applied.updatedAt!!,
             )
+
+            if (response.applyingStatus == ApplyingStatus.NOTHING) {
+                response.applyingStatus = ApplyingStatus.SAVED
+            }
+
+            return response
         }
     }
 }

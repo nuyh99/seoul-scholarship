@@ -13,7 +13,7 @@ data class StoredScholarshipResponse(
     val startDate: LocalDate?,
     val endDate: LocalDate?,
     val viewCount: Long,
-    val applyingStatus: ApplyingStatus,
+    var applyingStatus: ApplyingStatus,
     val storedDate: LocalDateTime,
 ) {
     companion object {
@@ -22,7 +22,7 @@ data class StoredScholarshipResponse(
             applyingStatus: ApplyingStatus = ApplyingStatus.NOTHING,
             storedDate: LocalDateTime
         ): StoredScholarshipResponse {
-            return StoredScholarshipResponse(
+            val response = StoredScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
@@ -31,8 +31,14 @@ data class StoredScholarshipResponse(
                 endDate = scholarship.endDate,
                 viewCount = scholarship.viewCount,
                 applyingStatus = applyingStatus,
-                storedDate = storedDate
+                storedDate = storedDate,
             )
+
+            if (response.applyingStatus == ApplyingStatus.NOTHING) {
+                response.applyingStatus = ApplyingStatus.SAVED
+            }
+
+            return response
         }
     }
 }
