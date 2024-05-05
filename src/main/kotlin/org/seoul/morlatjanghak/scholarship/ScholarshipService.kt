@@ -62,9 +62,10 @@ class ScholarshipService(
     }
 
     fun findRecommended(pageable: Pageable, searchOption: SearchOption, memberId: String): Page<ScholarshipResponse> {
+        val pageRequest = PageRequest.of(pageable.pageNumber, pageable.pageSize, searchOption.getSort())
         val recommendedScholarshipIds = recommendedScholarshipRepository.findAllByMemberId(memberId)
             .map { it.scholarshipId }
-        val scholarships = scholarshipRepository.findAllByIdInOrderBy(recommendedScholarshipIds, pageable)
+        val scholarships = scholarshipRepository.findAllByIdInOrderBy(recommendedScholarshipIds, pageRequest)
             .map(ScholarshipResponse.Companion::of)
 
         return createScholarshipResponse(memberId, scholarships)
