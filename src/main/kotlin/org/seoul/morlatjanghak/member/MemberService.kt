@@ -30,7 +30,8 @@ class MemberService(
     }
 
     fun isUpdateDone(memberId: String): MemberCompletedResponse {
-        val member = memberRepository.findById(memberId).orElseThrow()
+        val member = memberRepository.findById(memberId)
+            .orElseThrow { throw IllegalArgumentException("memberId: $memberId member not found") }
         return MemberCompletedResponse.from(member)
     }
 }
