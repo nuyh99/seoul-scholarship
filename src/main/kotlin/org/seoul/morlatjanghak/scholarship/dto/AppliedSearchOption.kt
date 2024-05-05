@@ -10,16 +10,14 @@ data class AppliedSearchOption(
         }
     }
 
-    fun sort(scholarships: List<AppliedScholarshipResponse>) {
+    fun sort(scholarships: List<AppliedScholarshipResponse>): List<AppliedScholarshipResponse> {
         if (deadline) {
-            scholarships.sortedBy { it.endDate }
-            return
+            return scholarships.sortedBy { it.endDate }
         }
         if (recent) {
-            scholarships.sortedByDescending { it.modifiedDate }
-            return
+            return scholarships.sortedByDescending { it.modifiedDate }
         }
 
-        scholarships.sortedByDescending { it.startDate }
+        return scholarships.sortedByDescending { it.startDate }
     }
 }

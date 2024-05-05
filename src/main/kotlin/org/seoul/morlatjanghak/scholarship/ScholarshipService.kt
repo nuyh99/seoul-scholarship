@@ -92,8 +92,7 @@ class ScholarshipService(
                 )
             }
 
-        searchOption.sort(response)
-        return response
+        return searchOption.sort(response)
     }
 
     fun findApplied(searchOption: AppliedSearchOption, memberId: String): List<AppliedScholarshipResponse> {
@@ -111,7 +110,6 @@ class ScholarshipService(
                 )
             }
 
-        searchOption.sort(response)
-        return response
+        return searchOption.sort(response)
     }
 }
