@@ -1,6 +1,6 @@
 package org.seoul.morlatjanghak.scholarship.dto
 
-import org.seoul.morlatjanghak.scholarship.Scholarship
+import org.seoul.morlatjanghak.scholarship.domain.Scholarship
 import java.time.LocalDate
 
 data class ScholarshipDetailResponse(

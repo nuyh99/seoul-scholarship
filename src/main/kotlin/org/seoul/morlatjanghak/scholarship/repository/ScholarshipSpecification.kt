@@ -1,9 +1,10 @@
-package org.seoul.morlatjanghak.scholarship
+package org.seoul.morlatjanghak.scholarship.repository
 
 import jakarta.persistence.criteria.CriteriaBuilder
 import jakarta.persistence.criteria.CriteriaQuery
 import jakarta.persistence.criteria.Predicate
 import jakarta.persistence.criteria.Root
+import org.seoul.morlatjanghak.scholarship.domain.Scholarship
 import org.seoul.morlatjanghak.scholarship.dto.SearchOption
 import org.springframework.data.jpa.domain.Specification
 

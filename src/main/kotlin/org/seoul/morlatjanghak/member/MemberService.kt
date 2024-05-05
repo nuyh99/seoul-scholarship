@@ -1,5 +1,6 @@
 package org.seoul.morlatjanghak.member
 
+import org.seoul.morlatjanghak.member.dto.MemberCompletedResponse
 import org.seoul.morlatjanghak.member.dto.MemberCreateRequest
 import org.seoul.morlatjanghak.member.event.MemberDeleteEvent
 import org.seoul.morlatjanghak.member.event.MemberUpdateEvent
@@ -26,5 +27,10 @@ class MemberService(
     fun delete(memberId: String) {
         memberRepository.deleteById(memberId)
         applicationEventPublisher.publishEvent(MemberDeleteEvent(memberId))
+    }
+
+    fun isUpdateDone(memberId: String): MemberCompletedResponse {
+        val member = memberRepository.findById(memberId).orElseThrow()
+        return MemberCompletedResponse.from(member)
     }
 }

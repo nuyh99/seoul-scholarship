@@ -3,8 +3,9 @@ package org.seoul.morlatjanghak.scholarship.dto
 import org.seoul.morlatjanghak.appliedscholarship.ApplyingStatus
 import org.seoul.morlatjanghak.scholarship.domain.Scholarship
 import java.time.LocalDate
+import java.time.LocalDateTime
 
-data class ScholarshipResponse(
+data class StoredScholarshipResponse(
     val id: Long,
     val organization: String,
     val productName: String,
@@ -12,25 +13,16 @@ data class ScholarshipResponse(
     val startDate: LocalDate?,
     val endDate: LocalDate?,
     val viewCount: Long,
-    var applyingStatus: ApplyingStatus,
-    var isStored: Boolean,
+    val applyingStatus: ApplyingStatus,
+    val storedDate: LocalDateTime,
 ) {
-
-    fun updateStored(isStored: Boolean) {
-        this.isStored = isStored
-    }
-
-    fun updateApplyingStatus(applyingStatus: ApplyingStatus) {
-        this.applyingStatus = applyingStatus
-    }
-
     companion object {
         fun of(
             scholarship: Scholarship,
             applyingStatus: ApplyingStatus = ApplyingStatus.NOTHING,
-            isStored: Boolean = false
-        ): ScholarshipResponse {
-            return ScholarshipResponse(
+            storedDate: LocalDateTime
+        ): StoredScholarshipResponse {
+            return StoredScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
@@ -39,7 +31,7 @@ data class ScholarshipResponse(
                 endDate = scholarship.endDate,
                 viewCount = scholarship.viewCount,
                 applyingStatus = applyingStatus,
-                isStored = isStored
+                storedDate = storedDate
             )
         }
     }

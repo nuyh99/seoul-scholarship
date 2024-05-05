@@ -1,10 +1,12 @@
 package org.seoul.morlatjanghak.scholarship.dto
 
+import org.seoul.morlatjanghak.appliedscholarship.AppliedScholarship
 import org.seoul.morlatjanghak.appliedscholarship.ApplyingStatus
 import org.seoul.morlatjanghak.scholarship.domain.Scholarship
 import java.time.LocalDate
+import java.time.LocalDateTime
 
-data class ScholarshipResponse(
+data class AppliedScholarshipResponse(
     val id: Long,
     val organization: String,
     val productName: String,
@@ -12,25 +14,17 @@ data class ScholarshipResponse(
     val startDate: LocalDate?,
     val endDate: LocalDate?,
     val viewCount: Long,
-    var applyingStatus: ApplyingStatus,
-    var isStored: Boolean,
+    val applyingStatus: ApplyingStatus,
+    val storedDate: LocalDateTime?,
+    val modifiedDate: LocalDateTime
 ) {
-
-    fun updateStored(isStored: Boolean) {
-        this.isStored = isStored
-    }
-
-    fun updateApplyingStatus(applyingStatus: ApplyingStatus) {
-        this.applyingStatus = applyingStatus
-    }
-
     companion object {
         fun of(
             scholarship: Scholarship,
-            applyingStatus: ApplyingStatus = ApplyingStatus.NOTHING,
-            isStored: Boolean = false
-        ): ScholarshipResponse {
-            return ScholarshipResponse(
+            applied: AppliedScholarship,
+            storedDate: LocalDateTime?
+        ): AppliedScholarshipResponse {
+            return AppliedScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
@@ -38,8 +32,9 @@ data class ScholarshipResponse(
                 startDate = scholarship.startDate,
                 endDate = scholarship.endDate,
                 viewCount = scholarship.viewCount,
-                applyingStatus = applyingStatus,
-                isStored = isStored
+                applyingStatus = applied.status,
+                storedDate = storedDate,
+                modifiedDate = applied.updatedAt!!
             )
         }
     }

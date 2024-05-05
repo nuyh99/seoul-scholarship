@@ -28,5 +28,13 @@ class Member(
     @CollectionTable(name = "member_detailed_condition")
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "detailed_condition")
-    val detailedConditions: List<String>
-)
+    val detailedConditions: List<String>,
+
+    var isDone: Boolean = false,
+    var totalRecommendedScholarshipCount: Int = 0
+) {
+    fun done(totalRecommendedScholarshipCount: Int) {
+        this.isDone = true
+        this.totalRecommendedScholarshipCount = totalRecommendedScholarshipCount
+    }
+}

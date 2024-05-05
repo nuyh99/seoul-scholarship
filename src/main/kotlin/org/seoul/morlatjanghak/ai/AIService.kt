@@ -3,10 +3,16 @@ package org.seoul.morlatjanghak.ai
 import org.seoul.morlatjanghak.ai.client.AIClient
 import org.seoul.morlatjanghak.ai.dto.ChatRequest
 import org.seoul.morlatjanghak.ai.dto.Message
+import org.seoul.morlatjanghak.member.MemberRepository
+import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipRepository
 import org.springframework.stereotype.Service
 
 @Service
-class AIService(private val client: AIClient) {
+class AIService(
+    private val client: AIClient,
+    private val memberRepository: MemberRepository,
+    private val scholarshipRepository: RecommendedScholarshipRepository,
+) {
 
     fun chat(request: String): String {
         val message = Message(role = USER_ROLE, content = request)

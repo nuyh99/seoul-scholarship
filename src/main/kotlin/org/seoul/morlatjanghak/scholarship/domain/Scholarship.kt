@@ -1,4 +1,4 @@
-package org.seoul.morlatjanghak.scholarship
+package org.seoul.morlatjanghak.scholarship.domain
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

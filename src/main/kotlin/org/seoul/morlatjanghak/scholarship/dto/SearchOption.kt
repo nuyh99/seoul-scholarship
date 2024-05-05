@@ -8,12 +8,13 @@ data class SearchOption(
     val deadline: Boolean = false,
 ) {
     fun getSort(): Sort {
-        val sort = Sort.unsorted()
-        viewCount.let {
-            sort.and(Sort.by(Sort.Order.desc("viewCount")))
+        var sort = Sort.by("startDate").descending()
+
+        if (viewCount) {
+            sort = Sort.by(Sort.Order.desc("viewCount"))
         }
-        deadline.let {
-            sort.and(Sort.by(Sort.Order.asc("endDate")))
+        if (deadline) {
+            sort = Sort.by(Sort.Order.asc("endDate"))
         }
 
         return sort
