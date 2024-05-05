@@ -6,24 +6,23 @@ import org.seoul.morlatjanghak.member.event.MemberDeleteEvent
 import org.seoul.morlatjanghak.member.event.MemberUpdateEvent
 import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarship
 import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipRepository
+import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipService
 import org.seoul.morlatjanghak.storedscholarship.StoredScholarshipRepository
 import org.slf4j.LoggerFactory
 import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.security.SecureRandom
-import java.util.Random
 
 @Component
 class MemberUpdateListener(
+    private val recommendedScholarshipService: RecommendedScholarshipService,
+
     private val recommendedScholarshipRepository: RecommendedScholarshipRepository,
     private val memberRepository: MemberRepository,
     private val appliedScholarshipRepository: AppliedScholarshipRepository,
     private val storedScholarshipRepository: StoredScholarshipRepository,
 ) {
-
-    private val random: Random = SecureRandom()
 
     @Async
     @EventListener(MemberDeleteEvent::class)
@@ -38,14 +37,14 @@ class MemberUpdateListener(
     @Transactional
     @EventListener(MemberUpdateEvent::class)
     fun handle(event: MemberUpdateEvent) {
-        generateSequence { random.nextLong(1, 1801) }
-            .take(100)
+        val member = memberRepository.findById(event.memberId).orElseThrow()
+
+        val recommendedScholarships = recommendedScholarshipService.recommendAndReturnScholarshipIds(event.memberId)
             .map { RecommendedScholarship(memberId = event.memberId, scholarshipId = it) }
             .toList()
-            .let { recommendedScholarshipRepository.saveAll(it) }
 
-        val member = memberRepository.findById(event.memberId).orElseThrow()
-        member.done(100)
+        recommendedScholarshipRepository.saveAll(recommendedScholarships)
+        member.done(recommendedScholarships.size)
 
         log.info("Member updated and set new recommended scholarships!: ${event.memberId}")
     }

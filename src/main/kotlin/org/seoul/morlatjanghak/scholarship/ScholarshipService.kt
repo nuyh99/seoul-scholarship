@@ -2,7 +2,7 @@ package org.seoul.morlatjanghak.scholarship
 
 import org.seoul.morlatjanghak.appliedscholarship.AppliedScholarshipRepository
 import org.seoul.morlatjanghak.appliedscholarship.ApplyingStatus
-import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipService
+import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipRepository
 import org.seoul.morlatjanghak.scholarship.dto.AppliedScholarshipResponse
 import org.seoul.morlatjanghak.scholarship.dto.AppliedSearchOption
 import org.seoul.morlatjanghak.scholarship.dto.ScholarshipDetailResponse
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 @Service
 class ScholarshipService(
-    private val recommendedScholarshipService: RecommendedScholarshipService,
+    private val recommendedScholarshipRepository: RecommendedScholarshipRepository,
     private val scholarshipRepository: ScholarshipRepository,
     private val appliedScholarshipRepository: AppliedScholarshipRepository,
     private val storedScholarshipRepository: StoredScholarshipRepository
@@ -62,7 +62,8 @@ class ScholarshipService(
     }
 
     fun findRecommended(pageable: Pageable, searchOption: SearchOption, memberId: String): Page<ScholarshipResponse> {
-        val recommendedScholarshipIds = recommendedScholarshipService.findRecommendedScholarshipIds(memberId)
+        val recommendedScholarshipIds = recommendedScholarshipRepository.findAllByMemberId(memberId)
+            .map { it.scholarshipId }
         val scholarships = scholarshipRepository.findAllByIdInOrderBy(recommendedScholarshipIds, pageable)
             .map(ScholarshipResponse.Companion::of)
 
