@@ -13,18 +13,18 @@ class Member(
 
     @Id
     val id: String,
-    val name: String,
-    val sex: String,
-    val birth: LocalDate,
-    val schoolName: String,
-    val majorCategory: String,
-    val semester: String,
-    val enrolled: String,
-    val lastSemesterGrade: Double,
-    val totalGrade: Double,
-    val incomeRange: String,
-    val militaryService: String,
-    val siblingExists: Boolean,
+    val name: String?,
+    val sex: String?,
+    val birth: LocalDate?,
+    val schoolName: String?,
+    val majorCategory: String?,
+    val semester: String?,
+    val enrolled: String?,
+    val lastSemesterGrade: Double?,
+    val totalGrade: Double?,
+    val incomeRange: String?,
+    val militaryService: String?,
+    val siblingExists: Boolean?,
     @CollectionTable(name = "member_detailed_condition")
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "detailed_condition")

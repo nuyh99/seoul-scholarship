@@ -5,19 +5,19 @@ import java.time.LocalDate
 
 data class MemberCreateRequest(
     val id: String,
-    val name: String,
-    val sex: String,
-    val birth: LocalDate,
-    val schoolName: String,
-    val majorCategory: String,
-    val semester: String,
-    val enrolled: String,
-    val lastSemesterGrade: Double,
-    val totalGrade: Double,
-    val incomeRange: String,
-    val militaryService: String,
-    val siblingExists: Boolean,
-    val detailedConditions: List<String>
+    val name: String?,
+    val sex: String?,
+    val birth: LocalDate?,
+    val schoolName: String?,
+    val majorCategory: String?,
+    val semester: String?,
+    val enrolled: String?,
+    val lastSemesterGrade: Double?,
+    val totalGrade: Double?,
+    val incomeRange: String?,
+    val militaryService: String?,
+    val siblingExists: Boolean?,
+    val detailedConditions: List<String> = emptyList(),
 ) {
     fun toEntity(): Member {
         return Member(
