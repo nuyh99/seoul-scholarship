@@ -46,6 +46,7 @@ class MemberUpdateListener(
             .map { RecommendedScholarship(memberId = event.memberId, scholarshipId = it) }
             .toList()
 
+        recommendedScholarshipRepository.deleteAllByMemberId(event.memberId)
         recommendedScholarshipRepository.saveAll(recommendedScholarships)
         member.done(recommendedScholarships.size)
 
