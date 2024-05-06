@@ -5,6 +5,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    open-in-view: false
+
   datasource:
     url: jdbc:mysql://localhost:20000/scholarship?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
