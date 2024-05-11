@@ -36,4 +36,31 @@ interface ScholarshipRepository : JpaRepository<Scholarship, Long>, JpaSpecifica
         """
     )
     fun findAllIdsByMajorLike(@Param("major") major: String): List<Long>
+
+    @Query(
+        """
+        SELECT s.id
+        FROM Scholarship s
+        WHERE s.formattedIncome >= :incomeRange
+        """
+    )
+    fun findAllIdsByIncomeEqualOrGreaterThan(@Param("incomeRange") incomeRange: Int): List<Long>
+
+    @Query(
+        """
+        SELECT s.id
+        FROM Scholarship s
+        WHERE s.formattedLastSemesterGrade = 0 OR s.formattedLastSemesterGrade >= :grade
+        """
+    )
+    fun findAllIdsByLastSemesterGradeEqualsOrGreaterThan(@Param("grade") grade: Double): List<Long>
+
+    @Query(
+        """
+        SELECT s.id
+        FROM Scholarship s
+        WHERE s.formattedTotalSemesterGrade = 0 OR s.formattedTotalSemesterGrade >= :grade
+        """
+    )
+    fun findAllIdsByTotalSemesterGradeEqualsOrGreaterThan(@Param("grade") grade: Double): List<Long>
 }

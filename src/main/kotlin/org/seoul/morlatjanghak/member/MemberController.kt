@@ -3,14 +3,14 @@ package org.seoul.morlatjanghak.member
 import org.seoul.morlatjanghak.member.dto.MemberCompletedResponse
 import org.seoul.morlatjanghak.member.dto.MemberCreateRequest
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 
-@Controller
+@RestController
 class MemberController(
     private val memberService: MemberService
 ) {
@@ -31,5 +31,11 @@ class MemberController(
     fun isCompleted(@PathVariable("memberId") memberId: String): ResponseEntity<MemberCompletedResponse> {
         val response = memberService.isUpdateDone(memberId)
         return ResponseEntity.ok().body(response)
+    }
+
+    @GetMapping("/api/members/migrate")
+    fun migrate(): ResponseEntity<Void> {
+        memberService.updateAll()
+        return ResponseEntity.noContent().build()
     }
 }

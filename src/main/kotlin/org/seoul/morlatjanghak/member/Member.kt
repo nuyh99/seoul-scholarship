@@ -22,7 +22,8 @@ class Member(
     val enrolled: String?,
     val lastSemesterGrade: Double?,
     val totalGrade: Double?,
-    val incomeRange: String?,
+    val gradeStandard: Double? = 4.5,
+    val incomeRange: Int?,
     val militaryService: String?,
     val siblingExists: Boolean?,
     @CollectionTable(name = "member_detailed_condition")
@@ -36,5 +37,25 @@ class Member(
     fun done(totalRecommendedScholarshipCount: Int) {
         this.isDone = true
         this.totalRecommendedScholarshipCount = totalRecommendedScholarshipCount
+    }
+
+    fun formattedLastSemesterGrade(): Double {
+        if (lastSemesterGrade == null || gradeStandard == null) {
+            return DEFAULT_GRADE_STANDARD
+        }
+
+        return lastSemesterGrade / gradeStandard * DEFAULT_GRADE_STANDARD
+    }
+
+    fun formattedTotalSemesterGrade(): Double {
+        if (totalGrade == null || gradeStandard == null) {
+            return DEFAULT_GRADE_STANDARD
+        }
+
+        return totalGrade / gradeStandard * DEFAULT_GRADE_STANDARD
+    }
+
+    companion object {
+        private const val DEFAULT_GRADE_STANDARD = 4.5
     }
 }

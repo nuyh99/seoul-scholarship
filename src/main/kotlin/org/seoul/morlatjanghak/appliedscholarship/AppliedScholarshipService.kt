@@ -15,5 +15,9 @@ class AppliedScholarshipService(
 
         appliedScholarship.updateStatus(applyingStatus)
         appliedScholarshipRepository.save(appliedScholarship)
+
+        if (appliedScholarship.status == ApplyingStatus.NOTHING) {
+            appliedScholarshipRepository.delete(appliedScholarship)
+        }
     }
 }

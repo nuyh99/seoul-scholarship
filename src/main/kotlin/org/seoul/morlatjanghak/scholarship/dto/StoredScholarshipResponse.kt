@@ -19,24 +19,20 @@ data class StoredScholarshipResponse(
     companion object {
         fun of(
             scholarship: Scholarship,
-            applyingStatus: ApplyingStatus = ApplyingStatus.NOTHING,
+            applyingStatus: ApplyingStatus,
             storedDate: LocalDateTime
         ): StoredScholarshipResponse {
             val response = StoredScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
-                supportDetails = scholarship.supportDetails,
+                supportDetails = scholarship.formattedSupportDetails,
                 startDate = scholarship.startDate,
                 endDate = scholarship.endDate,
                 viewCount = scholarship.viewCount,
                 applyingStatus = applyingStatus,
                 storedDate = storedDate,
             )
-
-            if (response.applyingStatus == ApplyingStatus.NOTHING) {
-                response.applyingStatus = ApplyingStatus.SAVED
-            }
 
             return response
         }

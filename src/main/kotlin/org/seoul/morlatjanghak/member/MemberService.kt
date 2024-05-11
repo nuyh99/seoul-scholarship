@@ -34,4 +34,10 @@ class MemberService(
             .orElseThrow { throw IllegalArgumentException("memberId: $memberId member not found") }
         return MemberCompletedResponse.from(member)
     }
+
+    fun updateAll() {
+        memberRepository.findAll().forEach {
+            applicationEventPublisher.publishEvent(MemberUpdateEvent(it.id))
+        }
+    }
 }

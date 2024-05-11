@@ -19,7 +19,19 @@ class RecommendedScholarshipService(
             .toSet()
         val majorFiltered = scholarshipRepository.findAllIdsByMajorLike(member.majorCategory ?: "")
             .toSet()
+        val incomeFiltered = scholarshipRepository.findAllIdsByIncomeEqualOrGreaterThan(member.incomeRange ?: 0)
+            .toSet()
+        val lastSemesterFiltered =
+            scholarshipRepository.findAllIdsByLastSemesterGradeEqualsOrGreaterThan(member.formattedLastSemesterGrade())
+                .toSet()
+        val totalSemesterFiltered =
+            scholarshipRepository.findAllIdsByTotalSemesterGradeEqualsOrGreaterThan(member.formattedTotalSemesterGrade())
+                .toSet()
 
+        //현재 학기, 전공, 소득구간, 직전학기 성적, 전체학기 성적 기준 필터링
         return semesterFiltered.intersect(majorFiltered)
+            .intersect(incomeFiltered)
+            .intersect(lastSemesterFiltered)
+            .intersect(totalSemesterFiltered)
     }
 }

@@ -15,6 +15,7 @@ data class ScholarshipDetailResponse(
     val gradeDetails: String,
     val incomeDetails: String,
     val supportDetails: String,
+    val formattedSupportDetails: String,
     val specificQualificationDetails: String,
     val localResidencyDetails: String,
     val selectionMethodDetails: String,
@@ -26,6 +27,8 @@ data class ScholarshipDetailResponse(
     val startDate: LocalDate?,
     val endDate: LocalDate?,
     val viewCount: Long,
+    val effortLevel: Int,
+    val effortLabel: String
 ) {
     companion object {
         fun from(scholarship: Scholarship): ScholarshipDetailResponse {
@@ -41,6 +44,7 @@ data class ScholarshipDetailResponse(
                 scholarship.gradeDetails,
                 scholarship.incomeDetails,
                 scholarship.supportDetails,
+                scholarship.formattedSupportDetails,
                 scholarship.specificQualificationDetails,
                 scholarship.localResidencyDetails,
                 scholarship.selectionMethodDetails,
@@ -52,6 +56,8 @@ data class ScholarshipDetailResponse(
                 scholarship.startDate,
                 scholarship.endDate,
                 scholarship.viewCount,
+                scholarship.effortLevel,
+                scholarship.effortLabel
             )
         }
     }

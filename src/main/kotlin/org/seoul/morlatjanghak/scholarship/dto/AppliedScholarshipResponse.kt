@@ -28,7 +28,7 @@ data class AppliedScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
-                supportDetails = scholarship.supportDetails,
+                supportDetails = scholarship.formattedSupportDetails,
                 startDate = scholarship.startDate,
                 endDate = scholarship.endDate,
                 viewCount = scholarship.viewCount,
@@ -36,10 +36,6 @@ data class AppliedScholarshipResponse(
                 storedDate = storedDate,
                 modifiedDate = applied.updatedAt!!,
             )
-
-            if (response.applyingStatus == ApplyingStatus.NOTHING) {
-                response.applyingStatus = ApplyingStatus.SAVED
-            }
 
             return response
         }

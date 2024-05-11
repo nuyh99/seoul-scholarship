@@ -90,7 +90,7 @@ class ScholarshipService(
                 StoredScholarshipResponse.of(
                     scholarship = it,
                     storedDate = storedScholarships[it.id]!!.updatedAt!!,
-                    applyingStatus = appliedScholarships[it.id]?.status ?: ApplyingStatus.NOTHING
+                    applyingStatus = appliedScholarships[it.id]?.status ?: ApplyingStatus.SAVED
                 )
             }
 

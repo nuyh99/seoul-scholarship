@@ -12,12 +12,15 @@ data class ScholarshipResponse(
     val startDate: LocalDate?,
     val endDate: LocalDate?,
     val viewCount: Long,
-    var applyingStatus: ApplyingStatus,
-    var isStored: Boolean,
+    var applyingStatus: ApplyingStatus? = null,
+    var isStored: Boolean? = false,
 ) {
 
     fun updateStored(isStored: Boolean) {
         this.isStored = isStored
+        if (applyingStatus == null) {
+            applyingStatus = ApplyingStatus.SAVED
+        }
     }
 
     fun updateApplyingStatus(applyingStatus: ApplyingStatus) {
@@ -27,24 +30,16 @@ data class ScholarshipResponse(
     companion object {
         fun of(
             scholarship: Scholarship,
-            applyingStatus: ApplyingStatus = ApplyingStatus.NOTHING,
-            isStored: Boolean = false
         ): ScholarshipResponse {
             val response = ScholarshipResponse(
                 id = scholarship.id,
                 organization = scholarship.organization,
                 productName = scholarship.productName,
-                supportDetails = scholarship.supportDetails,
+                supportDetails = scholarship.formattedSupportDetails,
                 startDate = scholarship.startDate,
                 endDate = scholarship.endDate,
                 viewCount = scholarship.viewCount,
-                applyingStatus = applyingStatus,
-                isStored = isStored,
             )
-
-            if (response.isStored && response.applyingStatus == ApplyingStatus.NOTHING) {
-                response.applyingStatus = ApplyingStatus.SAVED
-            }
 
             return response
         }
