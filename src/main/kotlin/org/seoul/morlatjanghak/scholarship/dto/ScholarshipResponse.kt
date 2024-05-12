@@ -12,13 +12,13 @@ data class ScholarshipResponse(
     val startDate: LocalDate?,
     val endDate: LocalDate?,
     val viewCount: Long,
-    var applyingStatus: ApplyingStatus? = null,
+    var applyingStatus: ApplyingStatus? = ApplyingStatus.NOTHING,
     var isStored: Boolean? = false,
 ) {
 
     fun updateStored(isStored: Boolean) {
         this.isStored = isStored
-        if (applyingStatus == null) {
+        if (applyingStatus == ApplyingStatus.NOTHING) {
             applyingStatus = ApplyingStatus.SAVED
         }
     }
