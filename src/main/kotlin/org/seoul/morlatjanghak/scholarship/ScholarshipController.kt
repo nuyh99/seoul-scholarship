@@ -33,8 +33,11 @@ class ScholarshipController(
     }
 
     @GetMapping("/api/scholarships/{scholarshipId}")
-    fun findById(@PathVariable("scholarshipId") scholarshipId: Long): ScholarshipDetailResponse {
-        return scholarshipService.findByIdAndIncreaseViewCount(scholarshipId)
+    fun findById(
+        @PathVariable("scholarshipId") scholarshipId: Long,
+        memberId: String = "unknown"
+    ): ScholarshipDetailResponse {
+        return scholarshipService.findByIdAndIncreaseViewCount(scholarshipId, memberId)
     }
 
     @GetMapping("/api/scholarships/members/{memberId}/stored")

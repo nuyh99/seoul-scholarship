@@ -1,5 +1,6 @@
 package org.seoul.morlatjanghak.scholarship.dto
 
+import org.seoul.morlatjanghak.appliedscholarship.ApplyingStatus
 import org.seoul.morlatjanghak.scholarship.domain.Scholarship
 import java.time.LocalDate
 
@@ -28,36 +29,44 @@ data class ScholarshipDetailResponse(
     val endDate: LocalDate?,
     val viewCount: Long,
     val effortLevel: Int,
-    val effortLabel: String
+    val effortLabel: String,
+    var applyingStatus: ApplyingStatus? = ApplyingStatus.NOTHING,
+    var isStored: Boolean? = false,
 ) {
     companion object {
-        fun from(scholarship: Scholarship): ScholarshipDetailResponse {
+        fun from(
+            scholarship: Scholarship,
+            isStored: Boolean,
+            applyingStatus: ApplyingStatus
+        ): ScholarshipDetailResponse {
             return ScholarshipDetailResponse(
-                scholarship.id,
-                scholarship.organization,
-                scholarship.productName,
-                scholarship.organizationType,
-                scholarship.scholarshipType,
-                scholarship.universityCategory,
-                scholarship.grade,
-                scholarship.majorCategory,
-                scholarship.gradeDetails,
-                scholarship.incomeDetails,
-                scholarship.supportDetails,
-                scholarship.formattedSupportDetails,
-                scholarship.specificQualificationDetails,
-                scholarship.localResidencyDetails,
-                scholarship.selectionMethodDetails,
-                scholarship.selectionCountDetails,
-                scholarship.eligibilityRestrictionDetails,
-                scholarship.recommendationRequiredDetails,
-                scholarship.requiredDocumentDetails,
-                scholarship.homePageUrl,
-                scholarship.startDate,
-                scholarship.endDate,
-                scholarship.viewCount,
-                scholarship.effortLevel,
-                scholarship.effortLabel
+                id = scholarship.id,
+                organization = scholarship.organization,
+                productName = scholarship.productName,
+                organizationType = scholarship.organizationType,
+                scholarshipType = scholarship.scholarshipType,
+                universityCategory = scholarship.universityCategory,
+                grade = scholarship.grade,
+                majorCategory = scholarship.majorCategory,
+                gradeDetails = scholarship.gradeDetails,
+                incomeDetails = scholarship.incomeDetails,
+                supportDetails = scholarship.supportDetails,
+                formattedSupportDetails = scholarship.formattedSupportDetails,
+                specificQualificationDetails = scholarship.specificQualificationDetails,
+                localResidencyDetails = scholarship.localResidencyDetails,
+                selectionMethodDetails = scholarship.selectionMethodDetails,
+                selectionCountDetails = scholarship.selectionCountDetails,
+                eligibilityRestrictionDetails = scholarship.eligibilityRestrictionDetails,
+                recommendationRequiredDetails = scholarship.recommendationRequiredDetails,
+                requiredDocumentDetails = scholarship.requiredDocumentDetails,
+                homePageUrl = scholarship.homePageUrl,
+                startDate = scholarship.startDate,
+                endDate = scholarship.endDate,
+                viewCount = scholarship.viewCount,
+                effortLevel = scholarship.effortLevel,
+                effortLabel = scholarship.effortLabel,
+                applyingStatus = applyingStatus,
+                isStored = isStored
             )
         }
     }

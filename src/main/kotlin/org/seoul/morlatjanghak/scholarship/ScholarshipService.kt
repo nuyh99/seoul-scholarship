@@ -72,11 +72,15 @@ class ScholarshipService(
     }
 
     @Transactional
-    fun findByIdAndIncreaseViewCount(id: Long): ScholarshipDetailResponse {
-        val scholarship = scholarshipRepository.findById(id).orElseThrow()
+    fun findByIdAndIncreaseViewCount(scholarshipId: Long, memberId: String): ScholarshipDetailResponse {
+        val scholarship = scholarshipRepository.findById(scholarshipId).orElseThrow()
         scholarship.increaseViewCount()
 
-        return ScholarshipDetailResponse.from(scholarship)
+        val status = appliedScholarshipRepository.findByScholarshipIdAndMemberId(scholarshipId, memberId)
+            ?.status ?: ApplyingStatus.NOTHING
+        val stored = storedScholarshipRepository.existsByMemberIdAndScholarshipId(memberId, scholarshipId)
+
+        return ScholarshipDetailResponse.from(scholarship, stored, status)
     }
 
     fun findStored(searchOption: StoredSearchOption, memberId: String): List<StoredScholarshipResponse> {
