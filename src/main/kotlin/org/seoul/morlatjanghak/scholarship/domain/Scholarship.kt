@@ -55,13 +55,13 @@ class Scholarship(
     val endDate: LocalDate?,
     @Column(columnDefinition = "bigint COMMENT '조회수'")
     var viewCount: Long = 0,
-    @Column(columnDefinition = "float COMMENT '정제된 직전 학기 성적 기준")
+    @Column(columnDefinition = "float COMMENT '정제된 직전 학기 성적 기준'")
     val formattedLastSemesterGrade: Double,
-    @Column(columnDefinition = "float COMMENT '정제된 전체 학기 성적 기준")
+    @Column(columnDefinition = "float COMMENT '정제된 전체 학기 성적 기준'")
     val formattedTotalSemesterGrade: Double,
-    @Column(columnDefinition = "int COMMENT '정제된 소득 구간 기준")
+    @Column(columnDefinition = "int COMMENT '정제된 소득 구간 기준'")
     val formattedIncome: Int,
-    @Column(columnDefinition = "varchar(100) COMMENT '정제된 지원 내역")
+    @Column(columnDefinition = "varchar(100) COMMENT '정제된 지원 내역'")
     val formattedSupportDetails: String,
     @Column(columnDefinition = "bigint COMMENT '노력지수 레벨'")
     val effortLevel: Int,
