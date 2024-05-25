@@ -24,7 +24,6 @@
 
   <springProfile name="prod">
     <root level="INFO">
-      <appender-ref ref="STDOUT"/>
       <appender-ref ref="ROLLING_LOG_FILE"/>
     </root>
   </springProfile>
