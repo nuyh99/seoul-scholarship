@@ -45,7 +45,7 @@
     <tr th:each="row : ${itemPage.content}">
       <td th:text="${row.number}">1</td>
       <td th:text="${row.filename}">example.csv</td>
-      <td th:text="${row.requestDate}">2023-01-01 12:00</td>
+      <td th:text="${#temporals.format(row.requestDate, 'dd-MM-yyyy HH:mm')}">2023-01-01 12:00</td>
       <td th:text="${row.completed}">완료</td>
     </tr>
     </tbody>
