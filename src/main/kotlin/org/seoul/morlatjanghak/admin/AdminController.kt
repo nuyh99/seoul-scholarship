@@ -21,8 +21,20 @@ class AdminController {
             requestDate = LocalDateTime.now(),
             completed = UploadStatus.SUCCESS
         )
+        val response2 = UploadResponse(
+            number = 2,
+            fileName = "테스트 파일2.csv",
+            requestDate = LocalDateTime.now(),
+            completed = UploadStatus.IN_PROGRESS
+        )
+        val response3 = UploadResponse(
+            number = 3,
+            fileName = "테스트 파일3.csv",
+            requestDate = LocalDateTime.now(),
+            completed = UploadStatus.FAIL
+        )
 
-        PageImpl(listOf(mockResponse), pageable, 1)
+        PageImpl(listOf(mockResponse, response2, response3), pageable, 1)
             .let { model.addAttribute("itemPage", it) }
 
         return "upload"
