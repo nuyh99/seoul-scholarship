@@ -2,6 +2,7 @@ package org.seoul.morlatjanghak.member
 
 import org.seoul.morlatjanghak.member.dto.MemberCompletedResponse
 import org.seoul.morlatjanghak.member.dto.MemberCreateRequest
+import org.seoul.morlatjanghak.member.dto.MemberStatusResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -37,5 +38,11 @@ class MemberController(
     fun migrate(): ResponseEntity<Void> {
         memberService.updateAll()
         return ResponseEntity.noContent().build()
+    }
+
+    @GetMapping("/api/members/{memberId}/status")
+    fun getStatus(@PathVariable("memberId") memberId: String): ResponseEntity<MemberStatusResponse> {
+        val response = memberService.getStatus(memberId)
+        return ResponseEntity.ok().body(response)
     }
 }
