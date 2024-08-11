@@ -1,42 +1,30 @@
 package org.seoul.morlatjanghak.admin
 
-import org.seoul.morlatjanghak.admin.domain.UploadStatus
-import org.seoul.morlatjanghak.admin.dto.UploadResponse
-import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
-import java.time.LocalDateTime
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.multipart.MultipartFile
+
 
 @Controller
-class AdminController {
+class AdminController(
+    private val uploadFileHistoryService: UploadFileHistoryService,
+) {
 
     @GetMapping("/admin/upload")
     fun index(model: Model, @PageableDefault pageable: Pageable): String {
-        val mockResponse = UploadResponse(
-            number = 1,
-            fileName = "테스트 파일.csv",
-            requestDate = LocalDateTime.now(),
-            completed = UploadStatus.SUCCESS
-        )
-        val response2 = UploadResponse(
-            number = 2,
-            fileName = "테스트 파일2.csv",
-            requestDate = LocalDateTime.now(),
-            completed = UploadStatus.IN_PROGRESS
-        )
-        val response3 = UploadResponse(
-            number = 3,
-            fileName = "테스트 파일3.csv",
-            requestDate = LocalDateTime.now(),
-            completed = UploadStatus.FAIL
-        )
-
-        PageImpl(listOf(mockResponse, response2, response3), pageable, 1)
-            .let { model.addAttribute("itemPage", it) }
-
+        val histories = uploadFileHistoryService.getHistories(pageable)
+        model.addAttribute("itemPage", histories)
         return "upload"
+    }
+
+    @PostMapping("/admin/upload")
+    fun handleFileUpload(@RequestParam("file") file: MultipartFile): String {
+        uploadFileHistoryService.upload(file)
+        return "redirect:/admin/upload"
     }
 }

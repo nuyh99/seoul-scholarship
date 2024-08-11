@@ -1,5 +1,7 @@
 package org.seoul.morlatjanghak.worker.member
 
+import org.seoul.morlatjanghak.admin.UploadFileHistoryRepository
+import org.seoul.morlatjanghak.admin.domain.ScholarshipUpdateEvent
 import org.seoul.morlatjanghak.appliedscholarship.AppliedScholarshipRepository
 import org.seoul.morlatjanghak.member.MemberRepository
 import org.seoul.morlatjanghak.member.event.MemberDeleteEvent
@@ -24,6 +26,7 @@ class MemberUpdateListener(
     private val memberRepository: MemberRepository,
     private val appliedScholarshipRepository: AppliedScholarshipRepository,
     private val storedScholarshipRepository: StoredScholarshipRepository,
+    private val uploadFileHistoryRepository: UploadFileHistoryRepository,
 ) {
 
     @Async
@@ -51,6 +54,36 @@ class MemberUpdateListener(
         member.done(recommendedScholarships.size)
 
         log.info("Member updated and set new recommended scholarships!: ${event.memberId}")
+    }
+
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @TransactionalEventListener(ScholarshipUpdateEvent::class, phase = TransactionPhase.AFTER_COMMIT)
+    fun handle(event: ScholarshipUpdateEvent) {
+        val members = memberRepository.findAll()
+
+        try {
+            members.forEach { member ->
+                val recommendedScholarships =
+                    recommendedScholarshipService.recommendAndReturnScholarshipIds(memberId = member.id)
+                        .map { RecommendedScholarship(memberId = member.id, scholarshipId = it) }
+                        .toList()
+
+                recommendedScholarshipRepository.deleteAllByMemberId(member.id)
+                recommendedScholarshipRepository.saveAll(recommendedScholarships)
+                member.done(recommendedScholarships.size)
+            }
+            log.info("장학금 업데이트 완료. 파일 업로드 번호: ${event.historyId}")
+            uploadFileHistoryRepository.findById(event.historyId).ifPresent { it.complete() }
+        } catch (e: Exception) {
+            markAsFailed(event.historyId)
+            log.error("Error occurred while updating scholarships for all members: ${e.message}")
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    fun markAsFailed(historyId: Long) {
+        uploadFileHistoryRepository.findById(historyId).ifPresent { it.fail() }
     }
 
     companion object {
