@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.time.LocalDateTime
 
 @Entity
 @EntityListeners(value = [AuditingEntityListener::class])
@@ -23,7 +24,7 @@ class UploadFileHistory(
 
     @CreatedDate
     @Column(columnDefinition = "datetime(6) not null comment '생성일'")
-    var createdDate: String? = null,
+    var createdDate: LocalDateTime? = null,
 
     @Column(columnDefinition = "varchar(50) not null comment '처리 상태'")
     @Enumerated(EnumType.STRING)
