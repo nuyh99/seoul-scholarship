@@ -60,7 +60,7 @@
       </li>
       <li class="page-item" th:each="i : ${#numbers.sequence(0, itemPage.totalPages - 1)}"
           th:classappend="${i == itemPage.number} ? 'active' : ''">
-        <a class="page-link" th:href="@{/items(page=${i})}" th:text="${i + 1}">1</a>
+        <a class="page-link" th:href="@{/items(page=${i})}" th:text="${i + 1}"></a>
       </li>
       <li class="page-item" th:classappend="${itemPage.hasNext()} ? '' : 'disabled'">
         <a class="page-link" th:href="@{/items(page=${itemPage.number + 1})}" aria-label="Next">
