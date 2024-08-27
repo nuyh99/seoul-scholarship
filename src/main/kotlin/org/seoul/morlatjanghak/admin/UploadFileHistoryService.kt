@@ -36,6 +36,7 @@ class UploadFileHistoryService(
         try {
             val scholarships = mutableListOf<Scholarship>()
             BufferedReader(file.inputStream.reader()).use { reader ->
+                reader.readLine()
                 reader.readLines().forEach { line ->
                     val values = line.split(",")
                     val scholarship = Scholarship(
