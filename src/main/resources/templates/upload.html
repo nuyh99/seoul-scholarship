@@ -43,10 +43,10 @@
     </thead>
     <tbody>
     <tr th:each="row : ${itemPage.content}">
-      <td th:text="${row.number}">1</td>
-      <td th:text="${row.filename}">example.csv</td>
-      <td th:text="${#temporals.format(row.requestDate, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01 12:00</td>
-      <td th:text="${row.completed}">완료</td>
+      <td th:text="${row.id}">1</td>
+      <td th:text="${row.fileName}">example.csv</td>
+      <td th:text="${#temporals.format(row.createdDate, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01 12:00</td>
+      <td th:text="${row.status}">완료</td>
     </tr>
     </tbody>
   </table>
