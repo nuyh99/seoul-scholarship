@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import java.io.BufferedReader
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Service
 class UploadFileHistoryService(
@@ -42,7 +43,7 @@ class UploadFileHistoryService(
                     val scholarship = Scholarship(
                         id = values[0].toLong(),
                         eligibilityRestrictionDetails = values[1],
-                        endDate = LocalDate.parse(values[2]),
+                        endDate = LocalDate.parse(values[2], DateTimeFormatter.ofPattern("yyyy.M.d")),
                         grade = values[3],
                         gradeDetails = values[4],
                         homePageUrl = values[5],
@@ -58,7 +59,7 @@ class UploadFileHistoryService(
                         selectionCountDetails = values[15],
                         selectionMethodDetails = values[16],
                         specificQualificationDetails = values[17],
-                        startDate = LocalDate.parse(values[18]),
+                        startDate = LocalDate.parse(values[18], DateTimeFormatter.ofPattern("yyyy.M.d")),
                         supportDetails = values[19],
                         universityCategory = values[20],
                         viewCount = values[21].toLong(),
