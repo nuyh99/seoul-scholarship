@@ -16,6 +16,9 @@ data class ScholarshipAdminResponse(
     val incomeDetails: String,
     val supportDetails: String,
     val formattedSupportDetails: String,
+    val formattedLastSemesterGrade: Double,
+    val formattedTotalSemesterGrade: Double,
+    val formattedIncome: Int,
     val specificQualificationDetails: String,
     val localResidencyDetails: String,
     val selectionMethodDetails: String,
@@ -58,6 +61,9 @@ data class ScholarshipAdminResponse(
                 viewCount = entity.viewCount,
                 effortLevel = entity.effortLevel,
                 effortLabel = entity.effortLabel,
+                formattedLastSemesterGrade = entity.formattedLastSemesterGrade,
+                formattedTotalSemesterGrade = entity.formattedTotalSemesterGrade,
+                formattedIncome = entity.formattedIncome,
             )
         }
     }
