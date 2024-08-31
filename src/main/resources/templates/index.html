@@ -1,0 +1,106 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" th:href="@{/icon/img.png}" type="image/x-icon">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>여깄장학 어드민</title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .header {
+      background-color: #ffffff;
+      padding: 15px;
+      width: 100%;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .header img {
+      height: 40px;
+      width: auto;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 40px;
+    }
+
+    .main-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .navbar {
+      width: 250px;
+      background-color: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .navbar .nav-link {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .navbar .nav-link.active, .navbar .nav-link:hover {
+      background-color: #e9ecef;
+      border-radius: 4px;
+      color: #0056b3;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+<!-- 헤더 -->
+<div th:replace="~{header :: header}"></div>
+
+<!-- 네비게이션 바와 콘텐츠 영역 -->
+<div class="main-content">
+  <!-- 사이드바 네비게이션 -->
+  <div class="navbar">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}" th:text="'홈'"
+           th:classappend="${content == 'main' ? ' active' : ''}"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/list}" th:text="'장학금 조회'"
+           th:classappend="${content == 'list' ? ' active' : ''}"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/upload}" th:text="'장학금 업로드'"
+           th:classappend="${content == 'upload' ? ' active' : ''}"></a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 동적으로 컨텐츠 로드 -->
+  <div class="content" th:replace="~{${content} :: ${content}}"></div>
+</div>
+</body>
+</html>

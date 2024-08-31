@@ -11,89 +11,79 @@
   <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
 </head>
 <body>
-<div class="container text-center">
-  <div class="row align-items-center">
-    <div class="col justify-content-start">
-      <img th:src="@{/icon/img.png}" alt="..." style="height: 150px; width: 150px">
+<th:block th:fragment="upload">
+  <div class="container mt-4">
+    <div class="d-flex justify-content-end mb-3">
+      <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#csvUploadModal">
+        CSV 업로드
+      </button>
+      <a th:href="@{/example-csv/예시파일.csv}" class="btn btn-secondary">
+        CSV 템플릿 파일 다운로드
+      </a>
     </div>
-    <div class="col-10">
-      <h1>여깄장학 어드민</h1>
-    </div>
+
+    <table class="table table-bordered text-center">
+      <thead class="table-dark">
+      <tr>
+        <th>번호</th>
+        <th>파일명</th>
+        <th>요청 일시</th>
+        <th>처리 완료 여부</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="row : ${itemPage.content}">
+        <td th:text="${row.id}">1</td>
+        <td th:text="${row.fileName}">example.csv</td>
+        <td th:text="${#temporals.format(row.createdDate, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01 12:00</td>
+        <td th:text="${row.status}">완료</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <th:block th:if="${itemPage.totalPages > 0}">
+          <li class="page-item" th:classappend="${itemPage.hasPrevious()} ? '' : 'disabled'">
+            <a class="page-link" th:href="@{/admin/upload(page=${itemPage.number - 1})}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" th:each="i : ${#numbers.sequence(0, itemPage.totalPages - 1)}"
+              th:classappend="${i == itemPage.number} ? 'active' : ''">
+            <a class="page-link" th:href="@{/admin/upload(page=${i})}" th:text="${i + 1}"></a>
+          </li>
+          <li class="page-item" th:classappend="${itemPage.hasNext()} ? '' : 'disabled'">
+            <a class="page-link" th:href="@{/admin/upload(page=${itemPage.number + 1})}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </th:block>
+      </ul>
+    </nav>
   </div>
-</div>
 
-<div class="container mt-4">
-  <div class="d-flex justify-content-end mb-3">
-    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#csvUploadModal">
-      CSV 업로드
-    </button>
-    <a th:href="@{/example-csv/예시파일.csv}" class="btn btn-secondary">
-      CSV 템플릿 파일 다운로드
-    </a>
-  </div>
-
-  <table class="table table-bordered text-center">
-    <thead class="table-dark">
-    <tr>
-      <th>번호</th>
-      <th>파일명</th>
-      <th>요청 일시</th>
-      <th>처리 완료 여부</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="row : ${itemPage.content}">
-      <td th:text="${row.id}">1</td>
-      <td th:text="${row.fileName}">example.csv</td>
-      <td th:text="${#temporals.format(row.createdDate, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01 12:00</td>
-      <td th:text="${row.status}">완료</td>
-    </tr>
-    </tbody>
-  </table>
-
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <th:block th:if="${itemPage.totalPages > 0}">
-        <li class="page-item" th:classappend="${itemPage.hasPrevious()} ? '' : 'disabled'">
-          <a class="page-link" th:href="@{/admin/upload(page=${itemPage.number - 1})}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" th:each="i : ${#numbers.sequence(0, itemPage.totalPages - 1)}"
-            th:classappend="${i == itemPage.number} ? 'active' : ''">
-          <a class="page-link" th:href="@{/admin/upload(page=${i})}" th:text="${i + 1}"></a>
-        </li>
-        <li class="page-item" th:classappend="${itemPage.hasNext()} ? '' : 'disabled'">
-          <a class="page-link" th:href="@{/admin/upload(page=${itemPage.number + 1})}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </th:block>
-    </ul>
-  </nav>
-</div>
-
-<!-- CSV Upload Modal -->
-<div class="modal fade" id="csvUploadModal" tabindex="-1" aria-labelledby="csvUploadModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="csvUploadModalLabel">CSV 파일 업로드</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/admin/upload" method="post" enctype="multipart/form-data">
-          <div class="mb-3">
-            <label for="formFile" class="form-label">CSV 파일 선택</label>
-            <input class="form-control" type="file" id="formFile" name="file">
-          </div>
-          <button type="submit" class="btn btn-primary">업로드</button>
-        </form>
+  <!-- CSV Upload Modal -->
+  <div class="modal fade" id="csvUploadModal" tabindex="-1" aria-labelledby="csvUploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="csvUploadModalLabel">CSV 파일 업로드</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/admin/upload" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="formFile" class="form-label">CSV 파일 선택</label>
+              <input class="form-control" type="file" id="formFile" name="file">
+            </div>
+            <button type="submit" class="btn btn-primary">업로드</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
+</th:block>
 <script>
 </script>
 </body>

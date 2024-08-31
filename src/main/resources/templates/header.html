@@ -1,0 +1,47 @@
+<!-- src/main/resources/templates/header.html -->
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" th:href="@{/icon/img.png}" type="image/x-icon">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>여깄장학 어드민</title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}">
+  <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+  <style>
+    .header {
+      background-color: #ffffff; /* 흰색 배경 */
+      padding: 15px; /* 여백 조정 */
+      width: 100%;
+      border-bottom: 1px solid #dee2e6; /* 구분선 추가 */
+    }
+
+    .header .container {
+      display: flex;
+      align-items: center; /* 세로 가운데 정렬 */
+      justify-content: center; /* 가로 가운데 정렬 */
+      gap: 10px; /* 아이콘과 텍스트 사이 간격 조정 */
+    }
+
+    .header img {
+      width: auto;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px; /* 텍스트 크기 조정 */
+    }
+  </style>
+</head>
+<body>
+<!-- 헤더 프래그먼트 -->
+<div th:fragment="header" class="header">
+  <div class="container">
+    <img th:src="@{/icon/img.png}" alt="로고" style="height: 100px">
+    <h1 style="display: inline">여깄장학 어드민</h1>
+  </div>
+</div>
+</body>
+</html>

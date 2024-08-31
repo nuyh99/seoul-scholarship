@@ -17,23 +17,31 @@ class AdminController(
     private val scholarshipService: ScholarshipService,
 ) {
 
+    @GetMapping
+    fun index(model: Model): String {
+        model.addAttribute("content", "main")
+        return "index"
+    }
+
     @GetMapping("/admin/upload")
     fun upload(model: Model, @PageableDefault pageable: Pageable): String {
         val histories = uploadFileHistoryService.getHistories(pageable)
         model.addAttribute("itemPage", histories)
-        return "upload"
+        model.addAttribute("content", "upload")
+        return "index"
     }
 
     @PostMapping("/admin/upload")
     fun handleFileUpload(@RequestParam("file") file: MultipartFile): String {
         uploadFileHistoryService.upload(file)
-        return "redirect:/admin/upload"
+        return "redirect:/"
     }
 
     @GetMapping("/admin/list")
     fun list(model: Model, @PageableDefault pageable: Pageable): String {
         val scholarships = scholarshipService.findScholarships(pageable)
         model.addAttribute("itemPage", scholarships)
-        return "list"
+        model.addAttribute("content", "list")
+        return "index"
     }
 }

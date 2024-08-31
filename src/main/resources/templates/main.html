@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+  <style>
+    .main-content {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .card-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem; /* 카드 사이 간격 조정 */
+    }
+
+    .card {
+      flex: 1 1 calc(50% - 1.5rem); /* 2열 구성 및 카드 사이 간격 조정 */
+      display: flex;
+      flex-direction: column;
+      min-height: 100%; /* 카드 높이를 맞추기 위한 설정 */
+    }
+
+    .card-body {
+      flex: 1; /* 카드 본문이 남는 공간을 채우도록 설정 */
+    }
+  </style>
+</head>
+<body>
+<th:block th:fragment="main">
+  <div class="container mt-4">
+    <div class="main-content">
+      <div class="card-group">
+        <!-- 카드 1 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title">장학금 조회</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text">장학금 목록을 조회할 수 있습니다.</p>
+            <a href="/admin/list" class="btn btn-primary">조회하기</a>
+          </div>
+        </div>
+        <!-- 카드 2 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title">장학금 업로드</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text">장학금 정보를 업로드할 수 있습니다.</p>
+            <a href="/admin/upload" class="btn btn-primary">업로드하기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+</body>
+</html>
