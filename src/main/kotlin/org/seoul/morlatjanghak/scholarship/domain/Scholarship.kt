@@ -6,7 +6,6 @@ import jakarta.persistence.Id
 import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 
-
 @Entity
 class Scholarship(
     @Id

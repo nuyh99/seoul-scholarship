@@ -5,6 +5,7 @@ import org.seoul.morlatjanghak.appliedscholarship.ApplyingStatus
 import org.seoul.morlatjanghak.recommendedscholarship.RecommendedScholarshipRepository
 import org.seoul.morlatjanghak.scholarship.dto.AppliedScholarshipResponse
 import org.seoul.morlatjanghak.scholarship.dto.AppliedSearchOption
+import org.seoul.morlatjanghak.scholarship.dto.ScholarshipAdminResponse
 import org.seoul.morlatjanghak.scholarship.dto.ScholarshipDetailResponse
 import org.seoul.morlatjanghak.scholarship.dto.ScholarshipResponse
 import org.seoul.morlatjanghak.scholarship.dto.SearchOption
@@ -117,5 +118,10 @@ class ScholarshipService(
             }
 
         return searchOption.sort(response)
+    }
+
+    fun findScholarships(pageable: Pageable): Page<ScholarshipAdminResponse> {
+        return scholarshipRepository.findAll(pageable)
+            .map(ScholarshipAdminResponse::from)
     }
 }
