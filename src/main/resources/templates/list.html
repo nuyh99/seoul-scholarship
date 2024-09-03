@@ -105,15 +105,42 @@
     <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
         <th:block th:if="${itemPage.totalPages > 0}">
+          <!-- 이전 페이지 버튼 -->
           <li class="page-item" th:classappend="${itemPage.hasPrevious()} ? '' : 'disabled'">
             <a class="page-link" th:href="@{/admin/list(page=${itemPage.number - 1})}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item" th:each="i : ${#numbers.sequence(0, itemPage.totalPages - 1)}"
+
+          <!-- 첫 페이지 버튼 -->
+          <li class="page-item" th:if="${itemPage.number > 2}">
+            <a class="page-link" th:href="@{/admin/list(page=0)}" th:text="1"></a>
+          </li>
+
+          <!-- ... 표시 (생략된 페이지들) -->
+          <li class="page-item disabled" th:if="${itemPage.number > 2}">
+            <span class="page-link">...</span>
+          </li>
+
+          <!-- 중간 페이지 버튼 -->
+          <li class="page-item" th:each="i : ${#numbers.sequence(itemPage.number - 2, itemPage.number + 2)}"
+              th:if="${i >= 0 && i < itemPage.totalPages}"
               th:classappend="${i == itemPage.number} ? 'active' : ''">
             <a class="page-link" th:href="@{/admin/list(page=${i})}" th:text="${i + 1}"></a>
           </li>
+
+          <!-- ... 표시 (생략된 페이지들) -->
+          <li class="page-item disabled" th:if="${itemPage.number < itemPage.totalPages - 3}">
+            <span class="page-link">...</span>
+          </li>
+
+          <!-- 마지막 페이지 버튼 -->
+          <li class="page-item" th:if="${itemPage.number < itemPage.totalPages - 3}">
+            <a class="page-link" th:href="@{/admin/list(page=${itemPage.totalPages - 1})}"
+               th:text="${itemPage.totalPages}"></a>
+          </li>
+
+          <!-- 다음 페이지 버튼 -->
           <li class="page-item" th:classappend="${itemPage.hasNext()} ? '' : 'disabled'">
             <a class="page-link" th:href="@{/admin/list(page=${itemPage.number + 1})}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
