@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 수정 -->
   <link rel="icon" th:href="@{/icon/img.png}" type="image/x-icon">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>여깄장학 어드민</title>
@@ -12,6 +11,18 @@
   <style>
     .table-container {
       overflow-x: auto;
+      max-width: 100%; /* 부모 요소 너비에 맞추기 */
+      margin-bottom: 1rem; /* 테이블과 페이지네이션 사이의 간격 추가 */
+    }
+
+    .table th, .table td {
+      white-space: nowrap; /* 텍스트가 셀 너비를 넘지 않도록 */
+    }
+
+    @media (max-width: 768px) {
+      .table th, .table td {
+        font-size: 14px; /* 작은 화면에서 폰트 크기 조정 */
+      }
     }
   </style>
 </head>
@@ -59,33 +70,33 @@
         </thead>
         <tbody>
         <tr th:each="row : ${itemPage.content}">
-          <td th:text="${row.id}"/>
-          <td th:text="${row.eligibilityRestrictionDetails}"/>
-          <td th:text="${row.specificQualificationDetails}"/>
-          <td th:text="${row.grade}"/>
-          <td th:text="${row.gradeDetails}"/>
-          <td th:text="${row.homePageUrl}"/>
-          <td th:text="${row.incomeDetails}"/>
-          <td th:text="${row.localResidencyDetails}"/>
-          <td th:text="${row.majorCategory}"/>
-          <td th:text="${row.organization}"/>
-          <td th:text="${row.organizationType}"/>
-          <td th:text="${row.productName}"/>
-          <td th:text="${row.recommendationRequiredDetails}"/>
-          <td th:text="${row.requiredDocumentDetails}"/>
-          <td th:text="${row.scholarshipType}"/>
-          <td th:text="${row.selectionCountDetails}"/>
-          <td th:text="${row.selectionMethodDetails}"/>
-          <td th:text="${#temporals.format(row.startDate, 'yyyy-MM-dd')}"/>
-          <td th:text="${#temporals.format(row.endDate, 'yyyy-MM-dd')}"/>
-          <td th:text="${row.supportDetails}"/>
-          <td th:text="${row.universityCategory}"/>
-          <td th:text="${row.formattedLastSemesterGrade}"/>
-          <td th:text="${row.formattedTotalSemesterGrade}"/>
-          <td th:text="${row.formattedIncome}"/>
-          <td th:text="${row.formattedSupportDetails}"/>
-          <td th:text="${row.effortLevel}"/>
-          <td th:text="${row.effortLabel}"/>
+          <td th:text="${row.id}"></td>
+          <td th:text="${row.eligibilityRestrictionDetails}"></td>
+          <td th:text="${row.specificQualificationDetails}"></td>
+          <td th:text="${row.grade}"></td>
+          <td th:text="${row.gradeDetails}"></td>
+          <td th:text="${row.homePageUrl}"></td>
+          <td th:text="${row.incomeDetails}"></td>
+          <td th:text="${row.localResidencyDetails}"></td>
+          <td th:text="${row.majorCategory}"></td>
+          <td th:text="${row.organization}"></td>
+          <td th:text="${row.organizationType}"></td>
+          <td th:text="${row.productName}"></td>
+          <td th:text="${row.recommendationRequiredDetails}"></td>
+          <td th:text="${row.requiredDocumentDetails}"></td>
+          <td th:text="${row.scholarshipType}"></td>
+          <td th:text="${row.selectionCountDetails}"></td>
+          <td th:text="${row.selectionMethodDetails}"></td>
+          <td th:text="${#temporals.format(row.startDate, 'yyyy-MM-dd')}"></td>
+          <td th:text="${#temporals.format(row.endDate, 'yyyy-MM-dd')}"></td>
+          <td th:text="${row.supportDetails}"></td>
+          <td th:text="${row.universityCategory}"></td>
+          <td th:text="${row.formattedLastSemesterGrade}"></td>
+          <td th:text="${row.formattedTotalSemesterGrade}"></td>
+          <td th:text="${row.formattedIncome}"></td>
+          <td th:text="${row.formattedSupportDetails}"></td>
+          <td th:text="${row.effortLevel}"></td>
+          <td th:text="${row.effortLabel}"></td>
         </tr>
         </tbody>
       </table>
